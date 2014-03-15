@@ -4,7 +4,7 @@ class CreateExamResults < ActiveRecord::Migration
       t.integer :user_id
       t.integer :exam_id
       t.integer :status
-      t.string :result
+      t.text :result
 
       t.timestamps
     end

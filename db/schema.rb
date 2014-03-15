@@ -22,23 +22,11 @@ ActiveRecord::Schema.define(version: 20140314075516) do
 
   add_index "answers", ["question_id"], name: "index_answers_on_question_id"
 
-  create_table "exam_details", force: true do |t|
-    t.integer  "exam_id"
-    t.integer  "subject_id"
-    t.integer  "level_id"
-    t.integer  "total_questions"
-    t.integer  "time_limit"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "exam_details", ["exam_id", "subject_id", "level_id"], name: "index_exam_details_on_exam_id_and_subject_id_and_level_id"
-
   create_table "exam_results", force: true do |t|
     t.integer  "user_id"
     t.integer  "exam_id"
     t.integer  "status"
-    t.string   "result"
+    t.text     "result"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -47,9 +35,22 @@ ActiveRecord::Schema.define(version: 20140314075516) do
 
   create_table "exams", force: true do |t|
     t.string   "exam"
+    t.integer  "total_questions"
+    t.integer  "time_limit"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "exams_subjects", id: false, force: true do |t|
+    t.integer  "subject_id"
+    t.integer  "exam_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "exams_subjects", ["exam_id", "subject_id"], name: "index_exams_subjects_on_exam_id_and_subject_id"
+  add_index "exams_subjects", ["exam_id"], name: "index_exams_subjects_on_exam_id"
+  add_index "exams_subjects", ["subject_id"], name: "index_exams_subjects_on_subject_id"
 
   create_table "levels", force: true do |t|
     t.string   "level"
@@ -60,14 +61,13 @@ ActiveRecord::Schema.define(version: 20140314075516) do
   create_table "practices", force: true do |t|
     t.integer  "user_id"
     t.integer  "subject_id"
-    t.integer  "level_id"
-    t.string   "result"
+    t.text     "result"
     t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "practices", ["user_id", "subject_id", "level_id"], name: "index_practices_on_user_id_and_subject_id_and_level_id"
+  add_index "practices", ["user_id", "subject_id"], name: "index_practices_on_user_id_and_subject_id"
 
   create_table "question_types", force: true do |t|
     t.string   "question_type"
