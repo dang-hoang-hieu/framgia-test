@@ -11,6 +11,7 @@ FramgiaTest::Application.routes.draw do
   match '/signin',  to: 'sessions#new',         via: 'get'
   match '/signout', to: 'sessions#destroy',      via: 'delete' 
 
+  resources :users
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
