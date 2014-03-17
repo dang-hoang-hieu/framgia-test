@@ -13,6 +13,7 @@ FramgiaTest::Application.routes.draw do
 
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
+  resources :subjects
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
