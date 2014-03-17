@@ -1,0 +1,11 @@
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@subject) do  |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+      <%= f.label :subject %>
+      <%= f.text_field :subject %>
+
+      <%= f.submit "Submit", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
