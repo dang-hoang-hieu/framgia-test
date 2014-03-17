@@ -11,27 +11,42 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140314075516) do
+ActiveRecord::Schema.define(version: 20140317013802) do
 
   create_table "answers", force: true do |t|
     t.integer  "question_id"
     t.string   "answer"
+    t.boolean  "correct_answer"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "answers", ["question_id"], name: "index_answers_on_question_id"
 
-  create_table "exam_results", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "exam_id"
-    t.integer  "status"
-    t.text     "result"
+  create_table "answers_sheet_details", force: true do |t|
+    t.integer  "answers_sheet_id", default: 0
+    t.integer  "question_id",      default: 0
+    t.integer  "user_answer"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "exam_results", ["user_id", "exam_id"], name: "index_exam_results_on_user_id_and_exam_id"
+  add_index "answers_sheet_details", ["answers_sheet_id"], name: "index_answers_sheet_details_on_answers_sheet_id"
+
+  create_table "answers_sheets", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "exam_id"
+    t.integer  "subject_id"
+    t.integer  "status"
+    t.string   "result"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "answers_sheets", ["user_id", "exam_id", "subject_id"], name: "index_answers_sheets_on_user_id_and_exam_id_and_subject_id"
+  add_index "answers_sheets", ["user_id", "exam_id"], name: "index_answers_sheets_on_user_id_and_exam_id"
+  add_index "answers_sheets", ["user_id", "subject_id"], name: "index_answers_sheets_on_user_id_and_subject_id"
+  add_index "answers_sheets", ["user_id"], name: "index_answers_sheets_on_user_id"
 
   create_table "exams", force: true do |t|
     t.string   "exam"
@@ -58,41 +73,27 @@ ActiveRecord::Schema.define(version: 20140314075516) do
     t.datetime "updated_at"
   end
 
-  create_table "practices", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "subject_id"
-    t.text     "result"
-    t.string   "status"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "practices", ["user_id", "subject_id"], name: "index_practices_on_user_id_and_subject_id"
-
-  create_table "question_types", force: true do |t|
-    t.string   "question_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "questions", force: true do |t|
     t.string   "question"
     t.integer  "subject_id"
     t.integer  "level_id"
-    t.integer  "question_type_id"
-    t.string   "answer_list"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "questions", ["level_id"], name: "index_questions_on_level_id"
-  add_index "questions", ["question_type_id"], name: "index_questions_on_question_type_id"
   add_index "questions", ["subject_id", "level_id"], name: "index_questions_on_subject_id_and_level_id"
-  add_index "questions", ["subject_id", "question_type_id"], name: "index_questions_on_subject_id_and_question_type_id"
   add_index "questions", ["subject_id"], name: "index_questions_on_subject_id"
 
   create_table "subjects", force: true do |t|
     t.string   "subject"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "user_answers", force: true do |t|
+    t.integer  "answers_sheet_detail_id"
+    t.integer  "user_answer"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

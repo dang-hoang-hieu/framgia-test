@@ -9,109 +9,103 @@ end
 end
 
 # Subject
-(1..10).each do |n|
-	Subject.create!( subject: "subject #{n+1}")
+(1..5).each do |n|
+	Subject.create!( subject: "subject #{n}")
 end
 
 # Level
-(1..5).each do |n|
-	Level.create!(level: "level #{n+1}")
+(1..3).each do |n|
+	Level.create!(level: "level #{n}")
 end
-
-# generate Question Types
-QuestionType.create!(question_type: "Single choices")
-QuestionType.create!(question_type: "Multiple choices")
-QuestionType.create!(question_type: "Text")
 
 # prepare for generate question and answers
 subjects 			 = Subject.all(limit: 3)
 levels   			 = Level.all(limit: 3)
-question_types = QuestionType.all  
-
-answer_list = Array.new
 
 # generate questions and answers
 subjects.each do |subject|
-	levels.each do |level|
-		question_types.each do |type|
-			(1..10).each do
+	levels.each do |level|	
+			(1..20).each do						
+					q = Question.create!(question: "#{Faker::Lorem.sentence(4)}?",
+								subject_id: subject.id, 
+								level_id: level.id)
 
-				unless type.question_type == "Text"
-					answer_list.clear
-					(0..3).each do |n|
-						answer_list[n] = Faker::Lorem.sentence(2)	
+					(rand(5) + 1).times do 
+						Answer.create!(question_id: q.id, 
+							answer: "#{Faker::Lorem.sentence(rand(6) + 2)}?", 
+							correct_answer: [true, false, false].sample )
 					end
-						
-					q = Question.create!(question: "#{Faker::Lorem.sentence(4)}?",
-								subject_id: subject.id, 
-								level_id: level.id, 
-								question_type_id: type.id,
-								answer_list: answer_list.to_json)
-				end	
-
-				case type.question_type
-				when "Single choices"	
-					correct_answer = {:"#{type.id}" => (rand(4) + 1)}
-					Answer.create!(question_id: q.id, answer: correct_answer.to_json)
-				when "Multiple choices"
-					correct_answer = {:"#{type.id}" => (1..4).to_a.shuffle.take(rand(4) + 1)}
-					Answer.create!(question_id: q.id, answer: correct_answer.to_json)
-				else
-					q = Question.create!(question: "#{Faker::Lorem.sentence(4)}?",
-								subject_id: subject.id, 
-								level_id: level.id, 
-								question_type_id: type.id,
-								answer_list: "")
-					correct_answer = Faker::Lorem.sentence(8)
-					Answer.create!(question_id: q.id, answer: correct_answer)
-				end
-
 			end
-		end
-	end
-end
-
-# generate users' practices
-users    = User.all
-subjects = Subject.all(limit: 3)
-result = Hash.new
-users.each do |user|
-	5.times do
-		subjects.each do |subject|
-			result.clear
-			question_ids = (1..100).to_a.shuffle.take(30)
-			question_ids.each do |q_id|
-				result[q_id] = [true, false].sample
-			end
-			
-	    Practice.create!(user_id: user.id, subject_id: subject.id, status: 1,
-	      result: result.to_json)	
-		end		
 	end
 end
 
 # generate exams
-(1..10).each do |n|
-	exam = Exam.create!(exam: "Exam #{n + 1}", total_questions: 31 + rand(10),
+(1..3).each do |n|
+	exam = Exam.create!(exam: "Exam #{n}", total_questions: 11 + rand(10),
 	 				time_limit: 20)
 	ExamsSubjects.create!(exam_id: exam.id, subject_id: 1)
 	ExamsSubjects.create!(exam_id: exam.id, subject_id: 2)
 	ExamsSubjects.create!(exam_id: exam.id, subject_id: 3)
 end
 
-# generate exams result
+# generate answers sheets
 users = User.all
-exams = Exam.all(limit: 4)
-result = Hash.new
+exam_ids = Exam.ids.take(3)
+subject_ids = Subject.ids.take(3)
+
 users.each do |user|
-	exams.each do |exam|
-		result.clear
-		question_ids = (1..100).to_a.shuffle.take(exam.total_questions)
-		question_ids.each do |q_id|
-			result[q_id] = [true, false].sample
-		end		
-		ExamResult.create!(user_id: user.id, exam_id: exam.id, status: 1, 
-			result: result.to_json)	
-	end	
+	if [true, false].sample # fake exam
+      exam_ids.shuffle.take(2).each do |exam_id|
+    	sheet = AnswersSheet.create!(user_id: user.id, exam_id: exam_id, 
+    		status: 1)
+    	result = ""
+    	sheet.exam.subjects.each do |subject|
+    		# get question base on subject
+    		number_questions = rand(10) + 11
+    		number_correct   = 0
+    		subject.questions.shuffle.take(number_questions).each do |question|    			
+    			answer_detail = AnswersSheetDetail.create!(
+    				answers_sheet_id: sheet.id, 
+    				question_id: question.id)
+    			answers = question.answers
+    			answers.each do |answer|
+    				if answer.correct_answer && [true, true, false].sample
+    					UserAnswer.create!(
+    						answers_sheet_detail_id: answer_detail.id,
+    						user_answer: answer.id)
+    					number_correct += 1
+    				end
+    			end
+    		end
+    		result << " - #{subject.subject}: #{number_correct}/#{number_questions}"
+    	end
+    	sheet.update_attributes(result: result)
+      end
+	else # fake practice
+        subject_ids.shuffle.take(2).each do |subject_id|
+            sheet = AnswersSheet.create!(user_id: user.id, 
+          	  subject_id: subject_id, status: 1)
+            result = ""
+            number_questions = rand(10) + 11
+    	    number_correct   = 0
+            subject = sheet.subject
+            subject.questions.shuffle.take(number_questions).each do |question|
+    			answer_detail = AnswersSheetDetail.create!(
+    				answers_sheet_id: sheet.id, 
+    				question_id: question.id)
+    			answers = question.answers
+    			answers.each do |answer|
+    				if answer.correct_answer && [true, false].sample
+    					UserAnswer.create!(
+    						answers_sheet_detail_id: answer_detail.id,
+    						user_answer: answer.id)
+    					number_correct += 1
+    				end
+    			end
+    		end
+    		result << " - #{subject.subject}: #{number_correct}/#{number_questions}"
+    		sheet.update_attributes(result: result)
+        end
+	end
 end
 
