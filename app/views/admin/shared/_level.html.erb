@@ -1,0 +1,11 @@
+<li><%= link_to level.level, [:admin, level] %>
+    <%= if signed_in_admin?
+    	  link_to "| Edit",  edit_admin_level_path(level) 
+    	end %>
+
+    <%= if signed_in_admin?
+    	  link_to "| Delete", [:admin, level], method: :delete, 
+            data: { confirm: "You sure?" } 
+         end
+    %>        
+</li>
