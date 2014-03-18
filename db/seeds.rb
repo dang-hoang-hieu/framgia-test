@@ -1,6 +1,6 @@
-if User.where(email: "super@framgia-test.com").blank?
-    User.create!(name: "Super Admin", email: "super@framgia-test.com", 
-    	password: "foobar", password_confirmation: "foobar", admin: true )
+if Admin.where(email: "super@framgia-test.com").blank?
+    Admin.create!(name: "Super Admin", email: "super@framgia-test.com", 
+    	password: "foobar", password_confirmation: "foobar")
 end
 
 (1..10).each do |n|
