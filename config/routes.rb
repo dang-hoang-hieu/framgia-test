@@ -19,6 +19,7 @@ FramgiaTest::Application.routes.draw do
   namespace :admin do
     root "subjects#index"
     resources :subjects
+    resources :levels
     resources :users, except: [:new, :create]
     resources :sessions, only: [:new, :create, :destroy]
   end

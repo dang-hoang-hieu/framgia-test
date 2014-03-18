@@ -1,0 +1,7 @@
+<h1>subjet list</h1>
+<h3><%= link_to "Create new level", new_admin_level_path  if signed_in_admin? %></h3>
+
+<ul>
+<%= render partial: "admin/shared/level", collection: @levels %>
+</ul>
+<%= will_paginate %>
