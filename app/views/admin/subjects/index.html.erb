@@ -1,0 +1,7 @@
+<h1>subjet list</h1>
+<h3><%= link_to "Create new subject", new_admin_subject_path  if signed_in_admin? %></h3>
+
+<ul>
+<%= render partial: "admin/shared/subject", collection: @subjects %>
+</ul>
+<%= will_paginate %>

@@ -1,0 +1,11 @@
+<li><%= link_to subject.subject, [:admin, subject] %>
+    <%= if signed_in_admin?
+    	  link_to "| Edit",  edit_admin_subject_path(subject) 
+    	end %>
+
+    <%= if signed_in_admin?
+    	  link_to "| Delete", [:admin, subject], method: :delete, 
+            data: { confirm: "You sure?" } 
+         end
+    %>        
+</li>

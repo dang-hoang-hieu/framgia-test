@@ -1,6 +1,5 @@
 class SessionsController < ApplicationController
   before_action :signed_in_user, only: :destroy
-  before_action :guest, only: [:create, :new]
 
   def new
   end

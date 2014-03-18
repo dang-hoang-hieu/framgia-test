@@ -10,10 +10,19 @@ FramgiaTest::Application.routes.draw do
   match '/signup',  to: 'users#new',            via: 'get'
   match '/signin',  to: 'sessions#new',         via: 'get'
   match '/signout', to: 'sessions#destroy',      via: 'delete' 
-
-  resources :users
+  match '/admin/signin',  to: 'admin/sessions#new', via: 'get'
+  match '/admin/signin',  to: 'admin/sessions#create', via: 'post'
+  match '/admin/signout', to: 'admin/sessions#destroy',      via: 'delete'
+  resources :users, except: [:index, :delete]
   resources :sessions, only: [:new, :create, :destroy]
-  resources :subjects
+
+  namespace :admin do
+    root "subjects#index"
+    resources :subjects
+    resources :users, except: [:new, :create]
+    resources :sessions, only: [:new, :create, :destroy]
+  end
+  
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

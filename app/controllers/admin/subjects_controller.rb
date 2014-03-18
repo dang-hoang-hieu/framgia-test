@@ -1,8 +1,9 @@
-class SubjectsController < ApplicationController
-  before_action :admin_user, except: [:index, :show]
+class Admin::SubjectsController < Admin::AdminsController  
+  before_action :signed_in_admin
 
   def index
-    @subjects = Subject.paginate page: params[:page], per_page: 3, limit: 3
+    @subjects = Subject.paginate page: params[:page], per_page: 3,
+      order: "created_at DESC"
   end
 
   def show
@@ -17,7 +18,7 @@ class SubjectsController < ApplicationController
     @subject = Subject.new subject_params
     if @subject.save
       flash[:success] = "create subject successfully"
-      redirect_to @subject
+      redirect_to [:admin, @subject]
     else
       flash.now[:error] = "error in create subject"
       render "new"
@@ -32,7 +33,7 @@ class SubjectsController < ApplicationController
     @subject = Subject.find params[:id]
     if @subject.update_attributes subject_params
       flash[:success] = "update subject successfully"
-      redirect_to @subject
+      redirect_to [:admin, @subject]
     else
       flash.now[:error] = "error in create subject"
       render "edit"
@@ -42,12 +43,7 @@ class SubjectsController < ApplicationController
   def destroy
     Subject.find(params[:id]).destroy
     flash[:success] = "Subject Deleted!"
-    redirect_to subjects_url
-  end
-
-  private
-  def admin_user
-    redirect_to root_url unless signed_in? && current_user.admin?
+    redirect_to admin_subjects_url
   end
 
   private

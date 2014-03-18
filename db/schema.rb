@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140317013802) do
+ActiveRecord::Schema.define(version: 20140317102409) do
+
+  create_table "admins", force: true do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "password_digest"
+    t.string   "remember_token"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "admins", ["email"], name: "index_admins_on_email", unique: true
 
   create_table "answers", force: true do |t|
     t.integer  "question_id"
@@ -68,7 +79,7 @@ ActiveRecord::Schema.define(version: 20140317013802) do
   add_index "exams_subjects", ["subject_id"], name: "index_exams_subjects_on_subject_id"
 
   create_table "levels", force: true do |t|
-    t.string   "level"
+    t.integer  "level"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

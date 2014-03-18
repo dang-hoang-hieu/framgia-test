@@ -1,0 +1,16 @@
+<% provide(:title, @admin.name) %>
+<div class="row">
+  <aside class="span4">
+    <section>
+      <h1>
+        <%= gravatar_for @admin %>
+        <%= @admin.name %>
+      </h1>
+    </section>
+    <% if current_admin?(@admin) %>
+    <% end %>
+  </aside>
+  <div class="span8">
+    <h3>Profile</h3>
+  </div>
+</div>

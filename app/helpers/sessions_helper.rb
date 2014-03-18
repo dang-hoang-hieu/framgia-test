@@ -43,7 +43,7 @@ module SessionsHelper
       redirect_to signin_url, notice: "Please sign in." 
     end
   end
-
+  
   private
   def guest
     redirect_to root_url if signed_in?

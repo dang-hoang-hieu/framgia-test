@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>FramgiaTest</title>
+  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= csrf_meta_tags %>
+  <%= render 'layouts/admin/shim' %>
+</head>
+<body>
+<%= render 'layouts/admin/header' %>
+    <div class="container">
+      <% flash.each do |key, value| %>
+        <%= content_tag(:div, value, class: "alert alert-#{key}") %>
+      <% end %>
+      <%= yield %>
+      <%= render 'layouts/admin/footer' %>
+      <%= debug(params) if Rails.env.development? %>
+    </div>
+</body>
+</html>
