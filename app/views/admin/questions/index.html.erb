@@ -1,4 +1,20 @@
-<%= link_to "create new question", new_admin_question_path %>
-<%= will_paginate %>
-<%= render partial: "admin/shared/question", collection: @questions %>
-<%= will_paginate %>
+<div class="row">
+	<div class="span2 offset0">
+		<h4><%= link_to "create new question", new_admin_question_path, 
+		  data: {:"no-turbolink" => true} %></h4>
+        <%= form_tag({controller: "questions", action: "index"}, method: "get") do %>
+        <%= label_tag(:subject, "By subject: ") %>
+        <%= collection_select(nil, :subject_id, Subject.all, :id, :subject, 
+          {selected: params[:subject_id], prompt: true}) %>
+        <%= collection_select(nil, :level_id, Level.all, :id, :level, 
+          {selected: params[:level_id], prompt: true}) %>  
+        <%= submit_tag("Filter", class: "btn") %>
+        <% end %> 
+	</div>
+	<div class="span9">
+      <div class="span9 offset2"><%= will_paginate %></div>
+        <%= render partial: "admin/shared/question", collection: @questions %>
+      <div class="span9 offset2"><%= will_paginate %></div>		
+	</div>
+</div>
+
