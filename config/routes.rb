@@ -20,6 +20,7 @@ FramgiaTest::Application.routes.draw do
     root "subjects#index"
     resources :subjects
     resources :levels
+    resources :questions
     resources :users, except: [:new, :create]
     resources :sessions, only: [:new, :create, :destroy]
   end

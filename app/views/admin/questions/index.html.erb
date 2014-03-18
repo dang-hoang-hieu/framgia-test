@@ -1,0 +1,4 @@
+<%= link_to "create new question", new_admin_question_path %>
+<%= will_paginate %>
+<%= render partial: "admin/shared/question", collection: @questions %>
+<%= will_paginate %>
