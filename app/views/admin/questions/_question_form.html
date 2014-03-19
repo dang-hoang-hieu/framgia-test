@@ -1,6 +1,6 @@
 <div class="row">
   <div class="span6 offset3">
-    <%= form_for [:admin, @question] do  |f| %>
+    <%= form_for [:admin, @question] do |f| %>
       <%= render "shared/error_messages", object: f.object %>
       <%= f.label "Subject" %>
       <%= collection_select(:question, :subject_id, Subject.all, :id, :subject) %>
@@ -9,7 +9,7 @@
       <%= f.label :question %>
       <%= f.text_area :question %>
       
-      <div class="row">
+      <div class="row" id="answers-list">
         <%= f.fields_for :answers do |answer_form| %>
           <label class="checkbox">
             <%= answer_form.hidden_field :id %> 
@@ -18,7 +18,15 @@
           </label>
         <% end %>
       </div>
+      <div class="row">
+        <label class="btn offset2" id="add-answer" >Add answer!</label>
+      </div>     
+
       <%= f.submit "Submit", class: "btn btn-primary" %>
     <% end %>
   </div>
 </div>
+
+
+  
+  

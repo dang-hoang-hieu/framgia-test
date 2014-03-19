@@ -2,8 +2,11 @@ class Admin::QuestionsController < Admin::AdminsController
   before_action :signed_in_admin
   
   def index
-    @questions = Question.paginate(page: params[:page], per_page: 5, 
-      order: "created_at DESC")
+    cond = Hash.new    
+    cond[:subject_id] = params[:subject_id] if params[:subject_id].to_i > 0
+    cond[:level_id]   = params[:level_id]   if params[:level_id].to_i > 0
+    @questions = Question.paginate(page: params[:page], 
+      per_page: 5, order: "created_at DESC", conditions: cond)
   end
 
   def show
@@ -49,7 +52,7 @@ class Admin::QuestionsController < Admin::AdminsController
 
   private
   def question_params
-    params.require(:question).permit(:question, :level_id, :question_id,
-     answers_attributes: [:correct_answer, :answer, :id])
+    params.require(:question).permit(:question, :level_id, :question_id, 
+      :subject_id, answers_attributes: [:correct_answer, :answer, :id])
   end
 end
