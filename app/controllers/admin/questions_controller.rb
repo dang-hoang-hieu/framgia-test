@@ -15,7 +15,14 @@ class Admin::QuestionsController < Admin::AdminsController
 
   def new
     @question = Question.new
-    3.times { @question.answers.build }
+    if params[:answer_number].to_i > 0
+      params[:answer_number] = params[:answer_number].to_i + 1
+      params[:answer_number].times { @question.answers.build }
+      render "_question_form", layout: false
+    else
+      params[:answer_number] = 1
+      params[:answer_number].times { @question.answers.build }
+    end
   end
 
   def create
