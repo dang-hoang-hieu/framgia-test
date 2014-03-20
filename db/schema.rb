@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 20140317102409) do
 
   create_table "answers", force: true do |t|
     t.integer  "question_id"
-    t.string   "answer"
+    t.string   "name"
     t.boolean  "correct_answer"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -37,7 +37,6 @@ ActiveRecord::Schema.define(version: 20140317102409) do
   create_table "answers_sheet_details", force: true do |t|
     t.integer  "answers_sheet_id", default: 0
     t.integer  "question_id",      default: 0
-    t.integer  "user_answer"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -49,7 +48,7 @@ ActiveRecord::Schema.define(version: 20140317102409) do
     t.integer  "exam_id"
     t.integer  "subject_id"
     t.integer  "status"
-    t.string   "result"
+    t.integer  "result"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -79,13 +78,13 @@ ActiveRecord::Schema.define(version: 20140317102409) do
   add_index "exams_subjects", ["subject_id"], name: "index_exams_subjects_on_subject_id"
 
   create_table "levels", force: true do |t|
-    t.integer  "level"
+    t.string   "level"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "questions", force: true do |t|
-    t.string   "question"
+    t.string   "name"
     t.integer  "subject_id"
     t.integer  "level_id"
     t.datetime "created_at"
@@ -104,7 +103,7 @@ ActiveRecord::Schema.define(version: 20140317102409) do
 
   create_table "user_answers", force: true do |t|
     t.integer  "answers_sheet_detail_id"
-    t.integer  "user_answer"
+    t.integer  "answer_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -112,7 +111,6 @@ ActiveRecord::Schema.define(version: 20140317102409) do
   create_table "users", force: true do |t|
     t.string   "name"
     t.string   "email"
-    t.boolean  "admin",           default: false
     t.string   "password_digest"
     t.string   "remember_token"
     t.datetime "created_at"
