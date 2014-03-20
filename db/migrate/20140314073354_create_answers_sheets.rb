@@ -5,7 +5,7 @@ class CreateAnswersSheets < ActiveRecord::Migration
       t.integer :exam_id
       t.integer :subject_id
       t.integer :status      
-      t.string  :result
+      t.integer :result
       
       t.timestamps
     end

@@ -15,7 +15,7 @@ end
 
 # Level
 (1..3).each do |n|
-	Level.create!(level: "level #{n}")
+	Level.create!(level: n)
 end
 
 # prepare for generate question and answers
@@ -26,13 +26,13 @@ levels   			 = Level.all(limit: 3)
 subjects.each do |subject|
 	levels.each do |level|	
 			(1..20).each do						
-					q = Question.create!(question: "#{Faker::Lorem.sentence(4)}?",
+					q = Question.create!(name: "#{Faker::Lorem.sentence(4)}?",
 								subject_id: subject.id, 
 								level_id: level.id)
 
 					(rand(5) + 1).times do 
 						Answer.create!(question_id: q.id, 
-							answer: "#{Faker::Lorem.sentence(rand(6) + 2)}?", 
+							name: "#{Faker::Lorem.sentence(rand(6) + 2)}?", 
 							correct_answer: [true, false, false].sample )
 					end
 			end
@@ -58,7 +58,7 @@ users.each do |user|
       exam_ids.shuffle.take(2).each do |exam_id|
     	sheet = AnswersSheet.create!(user_id: user.id, exam_id: exam_id, 
     		status: 1)
-    	result = ""
+    	result = 0
     	sheet.exam.subjects.each do |subject|
     		# get question base on subject
     		number_questions = rand(10) + 11
@@ -72,12 +72,12 @@ users.each do |user|
     				if answer.correct_answer && [true, true, false].sample
     					UserAnswer.create!(
     						answers_sheet_detail_id: answer_detail.id,
-    						user_answer: answer.id)
+    						answer_id: answer.id)
     					number_correct += 1
     				end
     			end
     		end
-    		result << " - #{subject.subject}: #{number_correct}/#{number_questions}"
+    		result = number_correct
     	end
     	sheet.update_attributes(result: result)
       end
@@ -85,7 +85,7 @@ users.each do |user|
         subject_ids.shuffle.take(2).each do |subject_id|
             sheet = AnswersSheet.create!(user_id: user.id, 
           	  subject_id: subject_id, status: 1)
-            result = ""
+            result = 0
             number_questions = rand(10) + 11
     	    number_correct   = 0
             subject = sheet.subject
@@ -98,12 +98,12 @@ users.each do |user|
     				if answer.correct_answer && [true, false].sample
     					UserAnswer.create!(
     						answers_sheet_detail_id: answer_detail.id,
-    						user_answer: answer.id)
+    						answer_id: answer.id)
     					number_correct += 1
     				end
     			end
     		end
-    		result << " - #{subject.subject}: #{number_correct}/#{number_questions}"
+    		result = number_correct
     		sheet.update_attributes(result: result)
         end
 	end
