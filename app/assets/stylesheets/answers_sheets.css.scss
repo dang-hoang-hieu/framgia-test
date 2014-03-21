@@ -1,0 +1,13 @@
+.correct {
+	background-color: yellow
+}
+
+.check-correct + label{
+  font-size: large;
+  font-weight: bold;
+  color: blue;	
+}
+
+.check-correct:checked + label{
+  color: darkgrey;		
+}

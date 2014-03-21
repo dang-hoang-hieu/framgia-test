@@ -13,20 +13,16 @@
 <%= form_for @answers_sheet do |f| %>
   <strong><%= "Student: #{@answers_sheet.user.name}" %></strong><br/>
   <strong><%= "Email: #{@answers_sheet.user.email}" %></strong><br/>
-  <%= f.hidden_field :id %>
-  <%= f.hidden_field :user_id %>
-  <%= f.hidden_field :subject_id %>
   <div class="row">
     <ol>
     <%= f.fields_for :answers_sheet_details do |detail_f| %>
       <li>
         <%= detail_f.object.question.name %>
       </li>
-       <%= detail_f.hidden_field :question_id %>
 	      <%= detail_f.fields_for :user_answers do |u_f| %>
 	        <label class="checkbox">
-	          <%= u_f.check_box :answer_id, {checked: false}, u_f.object.answer.id, 0 %>
-	          <%= u_f.object.answer.name %>
+	          <%= u_f.check_box :answer_id, {checked: false}, u_f.object.answer_id, 0 %>
+	          <%= u_f.object.answer.name if u_f.object.answer %>
 	        </label>
 	      <% end %>	  
     <% end %>

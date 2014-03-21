@@ -1,0 +1,30 @@
+<h1>Assert this exam</h1>
+<%= form_for [:admin, @answers_sheet] do |f| %>
+  <strong><%= "Student: #{@answers_sheet.user.name}" %></strong><br/>
+  <strong><%= "Email: #{@answers_sheet.user.email}" %></strong><br/>
+  <italic><%= "correct: #{@answers_sheet.result}/30" %></italic><br/>
+  <div class="row">
+    <ol>
+    <%= f.fields_for :answers_sheet_details do |detail_f| %>
+      <li>
+        <%= detail_f.object.question.name %>
+      </li>
+	      <%= detail_f.fields_for :user_answers do |u_f| %>
+	        <label class="checkbox">
+	          <%= u_f.check_box :answer_id, {checked: u_f.object.checked_by_user},
+             u_f.object.answer_id, 0 %>
+            <span class=<%= "correct" if u_f.object.answer.correct_answer %>>
+              <%= u_f.object.answer.name %>
+            </span>
+	        </label>
+	      <% end %>
+        
+        <label class="checkbox">
+          <%= detail_f.check_box :correct, {checked: detail_f.object.correct, class: "check-correct"} %>
+          <%= detail_f.label :correct, "correct?" %>
+        </label>
+    <% end %>
+    </ol>
+  </div>
+  <%= f.submit "Submit", class: "btn btn-primary" %>
+<% end %>
