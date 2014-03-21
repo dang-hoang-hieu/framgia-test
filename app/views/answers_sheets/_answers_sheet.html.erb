@@ -1,1 +1,13 @@
-<li><%= answers_sheet.subject_id %></li>
+<li>
+<%= answers_sheet.user.name %><br/>
+<strong>
+  <%= 
+    if answers_sheet.status.to_i == 2 
+  	  "result: #{answers_sheet.result}/30"  
+  	else
+  	  "result is under assertion"
+  	end
+  %>
+</strong><br/>
+at: <i><%= answers_sheet.updated_at %></i>
+</li>

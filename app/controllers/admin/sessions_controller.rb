@@ -9,7 +9,7 @@ class Admin::SessionsController < Admin::AdminsController
     if admin && admin.authenticate(params[:session][:password])      
       sign_admin_in admin
       flash[:success] = "Sign in successfully"      
-      redirect_back_or admin
+      redirect_back_or admin_user_path(admin)
     else
       flash.now[:error] = "email or password is incorrect"
       session.delete :return_to
