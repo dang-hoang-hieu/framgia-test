@@ -1,0 +1,31 @@
+<%= form_for [:admin, @exam] do |f| %>
+  <%= render "shared/error_messages", object: f.object %>
+  <%= f.label :name %>
+  <%= f.text_field :name %><br/>
+  <h3>subjects' detail for this exam:</h3>
+  <div id="subject-list">
+    <%= f.fields_for :exams_subjects do |exams_subject_f| %>  
+    <fieldset>
+      <legend><%= exams_subject_f.index + 1 %>.</legend>
+      
+        <%= exams_subject_f.label "subject" %>  
+        <%= exams_subject_f.collection_select(:subject_id , Subject.all, :id, :name) %>
+    
+        <%= exams_subject_f.label :total_questions %>
+        <%= exams_subject_f.text_field :total_questions, placeholder: "eg: 30" %>
+    
+        <%= exams_subject_f.label :time_limit %>
+        <%= exams_subject_f.text_field :time_limit, placeholder: "eg: 30" %>  
+        
+        <label class="btn remove-subject">remove</label>
+        <br/>
+    </fieldset>  
+    <% end %>  
+  </div>
+  <br/>
+  <section>
+    <%= f.submit "Submit", class: "btn btn-primary" %>
+    <label class="btn" id="add-subject">Add subject</label>  
+  </section>
+  
+<% end %>

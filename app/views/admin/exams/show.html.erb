@@ -1,0 +1,12 @@
+<h1>Exam detail</h1>
+exam name: <strong><%= @exam.name %></strong> <br/>
+<h3>Subjects' detail</h3>
+<ol>
+  <% @exam.exams_subjects.each do |exams_subject| %>
+    <li>
+      subject name: <%= exams_subject.subject.name %><br/>
+      number of quexams_subjecttions: <%= exams_subject.total_quexams_subjecttions %><br/>
+      time limit: <%= exams_subject.time_limit %> <br/>	
+    </li>  
+  <% end %>
+</ol>

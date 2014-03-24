@@ -4,7 +4,7 @@
 		  data: {:"no-turbolink" => true} %></h4>
         <%= form_tag({controller: "questions", action: "index"}, method: "get") do %>
         <%= label_tag(:subject, "By subject: ") %>
-        <%= collection_select(nil, :subject_id, Subject.all, :id, :subject, 
+        <%= collection_select(nil, :subject_id, Subject.all, :id, :name, 
           {selected: params[:subject_id], prompt: true}) %>
         <%= collection_select(nil, :level_id, Level.all, :id, :level, 
           {selected: params[:level_id], prompt: true}) %>  

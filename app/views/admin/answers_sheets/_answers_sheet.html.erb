@@ -1,5 +1,5 @@
 <li>
 <strong><%= answers_sheet.user.name %></strong><br/>
-<strong><%= answers_sheet.subject.subject unless answers_sheet.subject.nil? %></strong> 
+<strong><%= answers_sheet.subject.name unless answers_sheet.subject.nil? %></strong> 
 <i> result: <%= answers_sheet.result%>/30</i>
 <%= link_to "assert", edit_admin_answers_sheet_path(answers_sheet) %></li>

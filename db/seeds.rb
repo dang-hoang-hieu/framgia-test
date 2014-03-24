@@ -10,7 +10,7 @@ end
 
 # Subject
 (1..5).each do |n|
-	Subject.create!( subject: "subject #{n}")
+	Subject.create!( name: "name #{n}")
 end
 
 # Level
@@ -41,11 +41,13 @@ end
 
 # generate exams
 (1..3).each do |n|
-	exam = Exam.create!(exam: "Exam #{n}", total_questions: 11 + rand(10),
-	 				time_limit: 20)
-	ExamsSubjects.create!(exam_id: exam.id, subject_id: 1)
-	ExamsSubjects.create!(exam_id: exam.id, subject_id: 2)
-	ExamsSubjects.create!(exam_id: exam.id, subject_id: 3)
+	exam = Exam.create!(name: "Exam #{n}")
+	ExamsSubjects.create!(exam_id: exam.id, subject_id: 1, total_questions: 11 + rand(10),
+                    time_limit: 20)
+	ExamsSubjects.create!(exam_id: exam.id, subject_id: 2, total_questions: 11 + rand(10),
+                    time_limit: 20)
+	ExamsSubjects.create!(exam_id: exam.id, subject_id: 3, total_questions: 11 + rand(10),
+                    time_limit: 20)
 end
 
 # generate answers sheets

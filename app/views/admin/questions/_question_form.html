@@ -1,17 +1,17 @@
 <%= form_for [:admin, @question] do |f| %>
   <%= render "shared/error_messages", object: f.object %>
   <%= f.label "Subject" %>
-  <%= f.collection_select(:subject_id, Subject.all, :id, :subject) %>
+  <%= f.collection_select(:subject_id, Subject.all, :id, :name) %>
   <%= f.label "Level" %>
   <%= f.collection_select(:level_id, Level.all, :id, :level) %>
-  <%= f.label :question %>
-  <%= f.text_area :question %>
+  <%= f.label :name %>
+  <%= f.text_area :name %>
   <div class="row" id="answers-list">
     <%= f.fields_for :answers do |answer_form| %>
       <label class="checkbox">
         <%= answer_form.hidden_field :id %> 
         <%= answer_form.check_box :correct_answer %>
-        <%= answer_form.text_field :answer %>
+        <%= answer_form.text_field :name %>
       </label>
     <% end %>
   </div>

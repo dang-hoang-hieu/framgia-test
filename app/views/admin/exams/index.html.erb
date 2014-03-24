@@ -1,0 +1,10 @@
+<h1>List exams</h1>
+  <h4>
+    <%= link_to "New exam", new_admin_exam_path, 
+      data: {:"no-turbolink" => true} %>
+  </h4>
+<ul>
+  <%= will_paginate %>
+  <%= render partial: "exam", collection: @exams %>
+  <%= will_paginate %>
+</ul>
