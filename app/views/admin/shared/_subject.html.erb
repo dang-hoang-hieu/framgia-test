@@ -1,4 +1,4 @@
-<li><%= link_to subject.subject, [:admin, subject] %>
+<li><%= link_to subject.name, [:admin, subject] %>
     <%= if signed_in_admin?
     	  link_to "| Edit",  edit_admin_subject_path(subject) 
     	end %>

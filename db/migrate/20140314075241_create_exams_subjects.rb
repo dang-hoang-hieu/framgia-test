@@ -1,9 +1,10 @@
 class CreateExamsSubjects < ActiveRecord::Migration
   def change
-    create_table :exams_subjects, id: false do |t|      
+    create_table :exams_subjects do |t|      
       t.integer :subject_id
       t.integer :exam_id
-
+      t.integer :total_questions
+      t.integer :time_limit
       t.timestamps
     end
     add_index :exams_subjects, [:exam_id]
