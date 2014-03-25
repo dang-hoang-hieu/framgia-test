@@ -1,0 +1,12 @@
+<%= form_for @exam, url: admin_exam_user_list_path(@exam), remote: true do |f| %>
+  <%= @exam.name %>
+  <ul>  
+    <% User.all.each do |user| %>
+    <li>
+      <%= f.check_box :user_ids, {name: "exam[user_ids][]"}, user.id, "" %>
+      <%= user.name %>
+    </li>
+    <% end %>
+  </ul>
+  <%= f.submit "Assign", class: "btn btn-primary", id: "close-model" %>
+<% end %>

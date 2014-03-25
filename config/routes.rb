@@ -22,7 +22,9 @@ FramgiaTest::Application.routes.draw do
     resources :subjects
     resources :levels
     resources :questions
-    resources :exams
+    resources :exams do
+      resource :user_list
+    end
     resources :answers_sheets
     resources :users, except: [:new, :create]
     resources :sessions, only: [:new, :create, :destroy]

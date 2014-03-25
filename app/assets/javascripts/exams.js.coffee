@@ -13,3 +13,13 @@ $(document).on "page:change", ->
     $(".remove-subject").click ->
       $(this).parent().next().remove()
       $(this).parent().remove()
+
+    $("#exams-list").on "click", "label.btn-link", ->
+      exam_id = $(this).data("exam-id")
+      $.ajax '/admin/exams/' + exam_id + '/user_list/edit',
+        type: 'GET'
+        success: (user_list)->
+          $("#user-list").html(user_list)
+    
+    $("#user-list").on "click", "#close-model", ->
+      $("#assign-user-model").modal('hide')
