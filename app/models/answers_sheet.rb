@@ -4,8 +4,7 @@ class AnswersSheet < ActiveRecord::Base
   belongs_to :exam
   has_many   :answers_sheet_details
   accepts_nested_attributes_for :answers_sheet_details
-  before_save :filter_answer_checked_by_user, if: :have_answers_sheet_detail?
-  before_save :calculate_correct_answer, if: :have_answers_sheet_detail?
+  before_update :calculate_correct_answer, if: :have_answers_sheet_detail?
   before_create :set_status_to_pending, unless: :have_answers_sheet_detail?  
 
   PENDING = 0
@@ -17,9 +16,8 @@ class AnswersSheet < ActiveRecord::Base
     correct_num = 0
     self.answers_sheet_details.each do |detail|
       if self.status.to_i == SUCCESS
-        user_answers    = detail.user_answers.pluck :answer_id
-        correct_answers = detail.question.answers
-          .correct_answers.ids
+        user_answers    = detail.user_answers.pluck :checked
+        correct_answers = detail.question.answers.correct_answers.ids
           
         correct_num += 1 if user_answers == correct_answers
       else
@@ -27,15 +25,6 @@ class AnswersSheet < ActiveRecord::Base
       end
     end
     self.result = correct_num
-  end
- 
-  private 
-  def filter_answer_checked_by_user
-    self.answers_sheet_details.map do |detail|
-      detail.user_answers.map do |ans|
-        ans.delete if ans.answer_id == 0
-      end 
-    end
   end
 
   private

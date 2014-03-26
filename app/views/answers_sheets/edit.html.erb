@@ -21,8 +21,8 @@
       </li>
 	      <%= detail_f.fields_for :user_answers do |u_f| %>
 	        <label class="checkbox">
-	          <%= u_f.check_box :answer_id, {checked: false}, u_f.object.answer_id, 0 %>
-	          <%= u_f.object.answer.name if u_f.object.answer %>
+	          <%= u_f.check_box :checked, {}, u_f.object.answer_id, nil %>
+	          <%= u_f.object.answer.name %>
 	        </label>
 	      <% end %>	  
     <% end %>

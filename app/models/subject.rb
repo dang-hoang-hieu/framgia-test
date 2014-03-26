@@ -3,5 +3,5 @@ class Subject < ActiveRecord::Base
   has_many :exams, through: :exams_subjects
   has_many :questions
 
-  validates :subject, length: { minimum: 6 }  
+  validates :name, length: { minimum: 6 }  
 end

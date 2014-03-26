@@ -100,6 +100,7 @@ ActiveRecord::Schema.define(version: 20140325071139) do
   create_table "user_answers", force: true do |t|
     t.integer  "answers_sheet_detail_id"
     t.integer  "answer_id"
+    t.integer  "checked"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
