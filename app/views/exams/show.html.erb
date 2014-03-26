@@ -1,0 +1,23 @@
+<ul>
+	<% @exam_subjects_pending.each do |subject| %>
+	  <li>
+	    <%= link_to "Start #{subject.name}", 
+	      new_answers_sheet_path({subject_id: subject.id, exam_id: params[:id]}) %>
+	  </li>
+	<% end %>
+	<% @answers_sheets_to_edit.each do |answers_sheet| %>
+	    <%
+	      now = Time.now.to_i
+          time_passed = now - answers_sheet.created_at.to_i
+          time_limit = ExamsSubject.find_by(exam_id: params[:id], 
+          	subject_id: answers_sheet.subject.id).time_limit
+        %>
+
+        <% if time_limit.to_i > time_passed %>
+	      <li>
+	        <%= link_to "Edit #{answers_sheet.subject.name}",
+	          edit_answers_sheet_path(answers_sheet)  %>
+	      </li>
+	    <% end %>
+	<% end %>
+</ul>

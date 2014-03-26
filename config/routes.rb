@@ -16,7 +16,8 @@ FramgiaTest::Application.routes.draw do
   resources :users, except: [:index, :delete]
   resources :sessions, only: [:new, :create, :destroy]
   resources :answers_sheets, except: [:create, :destroy]
-  
+  resources :exams, only: [:index, :show]
+
   namespace :admin do
     root "subjects#index"
     resources :subjects
