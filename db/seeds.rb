@@ -71,12 +71,17 @@ users.each do |user|
     				question_id: question.id)
     			answers = question.answers
     			answers.each do |answer|
-    				if answer.correct_answer && [true, true, false].sample
-    					UserAnswer.create!(
-    						answers_sheet_detail_id: answer_detail.id,
-    						answer_id: answer.id)
-    					number_correct += 1
-    				end
+                    checked = [true, true, false].sample
+                    if checked
+                      UserAnswer.create!(
+                        answers_sheet_detail_id: answer_detail.id,
+                        answer_id: answer.id, checked: answer.id)
+                      number_correct += 1
+                    else
+                      UserAnswer.create!(
+                        answers_sheet_detail_id: answer_detail.id,
+                        answer_id: answer.id, checked: nil)
+                    end
     			end
     		end
     		result = number_correct
@@ -97,12 +102,17 @@ users.each do |user|
     				question_id: question.id)
     			answers = question.answers
     			answers.each do |answer|
-    				if answer.correct_answer && [true, false].sample
-    					UserAnswer.create!(
-    						answers_sheet_detail_id: answer_detail.id,
-    						answer_id: answer.id)
-    					number_correct += 1
-    				end
+    				checked = [true, true, false].sample
+                    if checked
+                      UserAnswer.create!(
+                        answers_sheet_detail_id: answer_detail.id,
+                        answer_id: answer.id, checked: answer.id)
+                      number_correct += 1
+                    else
+                      UserAnswer.create!(
+                        answers_sheet_detail_id: answer_detail.id,
+                        answer_id: answer.id, checked: nil)
+                    end
     			end
     		end
     		result = number_correct

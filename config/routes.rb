@@ -15,7 +15,7 @@ FramgiaTest::Application.routes.draw do
   match '/admin/signout', to: 'admin/sessions#destroy',      via: 'delete'
   resources :users, except: [:index, :delete]
   resources :sessions, only: [:new, :create, :destroy]
-  resources :answers_sheets, only: [:index, :show, :new, :update]
+  resources :answers_sheets, except: [:create, :destroy]
   
   namespace :admin do
     root "subjects#index"

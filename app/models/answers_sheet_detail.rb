@@ -8,8 +8,8 @@ class AnswersSheetDetail < ActiveRecord::Base
   after_find :check_correct
 
   def check_correct
-    user_answers    = self.user_answers.pluck :answer_id
+    user_answers    = self.user_answers.pluck :checked
     correct_answers = self.question.answers.correct_answers.ids
-    self.correct = true if user_answers == correct_answers
+    self.correct = 1 if user_answers == correct_answers
   end
 end
