@@ -1,10 +1,24 @@
 <h1>List exams</h1>
   <h4>
-    <%= link_to "New exam", new_admin_exam_path, 
+    <%= link_to "New exam", new_admin_exam_path,
       data: {:"no-turbolink" => true} %>
   </h4>
-<ul>
-  <%= will_paginate %>
-  <%= render partial: "exam", collection: @exams %>
-  <%= will_paginate %>
+<ul id="exams-list">
+	<%= will_paginate %>
+	<%= render partial: "exam", collection: @exams %>
+	<%= will_paginate %>
 </ul>
+
+<!-- Modal -->
+<div id="assign-user-model" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="Assign user to exam" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3 id="myModalLabel">Assign user to exam</h3>
+	</div>
+	<div class="modal-body">
+		<div class="span2 offset1" id="user-list"></div>
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+	</div>
+</div>

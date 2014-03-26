@@ -2,4 +2,5 @@
   <%= link_to exam.name, [:admin, exam] %>
   <%= link_to " | Edit", edit_admin_exam_path(exam) %>
   <%= link_to " | Delete", [:admin, exam], method: :delete, data: {confirm: "you sure?"} %>
+  <label class="btn btn-link" href="#assign-user-model" role="button" data-toggle="modal" data-exam-id="<%= exam.id%>">Assign users</label>
 </li>

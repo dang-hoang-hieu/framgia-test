@@ -5,7 +5,7 @@ exam name: <strong><%= @exam.name %></strong> <br/>
   <% @exam.exams_subjects.each do |exams_subject| %>
     <li>
       subject name: <%= exams_subject.subject.name %><br/>
-      number of quexams_subjecttions: <%= exams_subject.total_quexams_subjecttions %><br/>
+      number of questions: <%= exams_subject.total_questions %><br/>
       time limit: <%= exams_subject.time_limit %> <br/>	
     </li>  
   <% end %>
