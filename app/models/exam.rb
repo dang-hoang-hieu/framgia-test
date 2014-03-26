@@ -5,5 +5,5 @@ class Exam < ActiveRecord::Base
   has_many :exams_users
   has_many :users, through: :exams_users
   accepts_nested_attributes_for :exams_subjects
-  validates :name, presence: true  
+  validates :name, presence: true
 end

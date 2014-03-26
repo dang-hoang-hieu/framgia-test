@@ -1,6 +1,5 @@
 class Admin::AnswersSheetsController < Admin::AdminsController  
   before_action :signed_in_admin  
-  SUCCESS  = 1
   ASSERTED = 2
   
   def index
