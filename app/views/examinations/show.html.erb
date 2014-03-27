@@ -1,0 +1,41 @@
+<h1>detail of tests in examination</h1>
+<ul>
+    <% @examination.answers_sheets.each do |answers_sheet| %>
+      <li>
+        <% 
+          exam_id = @examination.exam_id
+          @subject = answers_sheet.subject
+          time_limit = @subject.time_limit_by exam_id
+          total_questions = @subject.total_questions_by exam_id
+        %>
+
+        <%= @subject.name %><br/>
+        total of questions: <strong><%= total_questions %></strong>
+        time limit: <strong><%= time_limit / 60 %> minutes.</strong>
+
+        <% if answers_sheet.editable? time_limit %>
+          <%= link_to "Edit", edit_examination_answers_sheet_path(@examination, answers_sheet) %>
+        <% else %>
+          result: <%= answers_sheet.result %>/<%= total_questions %>
+        <% end %>
+      </li>
+    <% end %>
+    
+    <% subject_list_of_started_exam = @examination.answers_sheets.pluck :subject_id %>
+    <% @examination.exam.exams_subjects.each do |exams_subject| %>
+      <% unless subject_list_of_started_exam.include? exams_subject.subject_id %>
+        <li>
+
+          <%= exams_subject.subject.name %><br/>
+          total questions: <%= exams_subject.total_questions %><br/>
+          time limit: <%= exams_subject.time_limit / 60 %> minutes.<br/>
+
+          <% @answers_sheet = AnswersSheet.new %>
+          <%= form_for [@examination, @answers_sheet] do |f| %>
+            <%= hidden_field_tag :subject_id, exams_subject.subject_id  %>
+            <%= f.submit "start", class: "btn btn-primary" %>
+          <% end %>
+        </li>
+      <% end %>
+    <% end %>
+</ul>

@@ -10,7 +10,7 @@ end
 
 # Subject
 (1..5).each do |n|
-	Subject.create!( name: "name #{n}")
+	Subject.create!( name: "name #{n}", total_questions: 30, time_limit: 30)
 end
 
 # Level

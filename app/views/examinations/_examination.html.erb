@@ -1,0 +1,26 @@
+<li>
+  <% if examination.exam_id? %>
+    assigned exam: <%= link_to examination.exam.name, examination %><br/>  
+  <% else %>
+    exam for practice: <br/>
+    subject: <%= examination.subject.name %>
+    <% @answers_sheets = examination.try(:answers_sheets) %>
+    <% if @answers_sheets.present? %>
+      <% @answers_sheet = @answers_sheets.first %>
+      <br /> 
+      result: <%= @answers_sheet.result %>/<%= @answers_sheet.subject.total_questions %>
+      <%
+        now = Time.now.to_i
+        time_passed = now - @answers_sheet.created_at.to_i
+      %>
+      <% if time_passed < @answers_sheet.subject.time_limit %>
+        <%= link_to  "Edit", edit_examination_answers_sheet_url(examination, @answers_sheet) %><br/>
+      <% end %>
+    <% else %>
+      <%= link_to "Edit", edit_examination_url(examination) %><br/>
+    <% end %>    
+  <% end %>
+  created_at: <%= examination.created_at %>
+</li>
+  
+    

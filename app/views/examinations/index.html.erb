@@ -1,0 +1,16 @@
+<fieldset>
+	<legend>new examination:</legend>
+    <%= form_for Examination.new do |f| %>
+      <%= collection_select(nil, :subject_id, Subject.all, :id, :name) %>
+      <%= f.submit "choose subject", class: "btn btn-primary" %>
+    <% end %>
+</fieldset>
+
+<fieldset>
+	<legend>your exams:</legend>
+    <%= will_paginate @examinations %>
+      <ul>
+        <%= render partial: "examination", collection: @examinations %>
+      </ul>
+    <%= will_paginate @examinations %>
+</fieldset>

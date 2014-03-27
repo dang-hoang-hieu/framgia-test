@@ -1,4 +1,4 @@
-<h1>quesions in exam</h1>
+<h1>quesions</h1>
 <div class="span2" style="position: fixed; top: 60px; left:-10px">
   <div id="count-down"></div>
 </div>
@@ -10,9 +10,9 @@
     });
   })    
 </script>
-<%= form_for @answers_sheet do |f| %>
-  <strong><%= "Student: #{@answers_sheet.user.name}" %></strong><br/>
-  <strong><%= "Email: #{@answers_sheet.user.email}" %></strong><br/>
+<%= form_for [@examination, @answers_sheet] do |f| %>
+  <strong><%= "Student: #{@examination.user.name}" %></strong><br/>
+  <strong><%= "Email: #{@examination.user.email}" %></strong><br/>
   <div class="row">
     <ol>
     <%= f.fields_for :answers_sheet_details do |detail_f| %>
