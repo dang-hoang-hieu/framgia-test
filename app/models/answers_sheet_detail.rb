@@ -1,7 +1,7 @@
 class AnswersSheetDetail < ActiveRecord::Base
   belongs_to :question
   belongs_to :answers_sheet
-  has_many :user_answers
+  has_many :user_answers, dependent: :destroy
   attr_accessor :correct
   accepts_nested_attributes_for :user_answers
   

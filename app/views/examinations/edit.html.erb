@@ -1,0 +1,8 @@
+<h1>you choose to practice:</h1>
+subject: <%= @examination.subject.name %> <br/>
+number of question: <%= @examination.subject.total_questions %> <br />
+time limit <%= @examination.subject.time_limit / 60 %> minutes<br />
+<% @answers_sheet = AnswersSheet.new %>
+<%= form_for [@examination, @answers_sheet] do |f| %>
+  <%= f.submit "start", class: "btn btn-primary" %>
+<% end %>

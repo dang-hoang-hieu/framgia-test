@@ -5,8 +5,7 @@
       <nav>
         <ul class="nav pull-right">
           <li><%= link_to "Home", root_path %></li>          
-          <li><%= link_to "Exams", exams_path %></li>
-          <li><%= link_to "Practices", answers_sheets_path %></li>
+          <li><%= link_to "Exams", examinations_path %></li>
           <li><%= link_to "Help", help_path %></li>
           <% if signed_in? %>            
             <li id="fat-menu" class="dropdown">

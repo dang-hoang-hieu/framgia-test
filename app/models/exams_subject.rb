@@ -7,9 +7,10 @@ class ExamsSubject < ActiveRecord::Base
   validates :total_questions, presence: true
   validates :time_limit, presence: true
   before_save :convert_time_to_second
+  
   scope :find_by_ids, ->(ids) { where(id: ids) }
 
   def convert_time_to_second
-  	self.time_limit = self.time_limit * 60
+    self.time_limit = self.time_limit * 60
   end
 end
