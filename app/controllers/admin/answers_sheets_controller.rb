@@ -9,19 +9,20 @@ class Admin::AnswersSheetsController < Admin::AdminsController
 
   def show
     @answers_sheet = AnswersSheet.find params[:id]
-  end  
+  end
 
   def edit
     @answers_sheet = AnswersSheet.find params[:id]
     fill_user_answers_to @answers_sheet
+    @examination = @answers_sheet.examination
   end
 
   def update
     @answers_sheet = AnswersSheet.find params[:id]
     @answers_sheet.status  = ASSERTED
     if @answers_sheet.update_attributes answers_sheet_params
-      flash[:success] = "result asserted!"
-      redirect_to [:admin, @answers_sheet]
+      flash[:success] = "result asserted!!!"
+      redirect_to [:admin, @answers_sheet.examination]
     else
       flash.now[:error] = "error in assert"
       render "edit"

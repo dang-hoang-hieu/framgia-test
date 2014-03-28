@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140327014849) do
+ActiveRecord::Schema.define(version: 20140331021718) do
 
   create_table "admins", force: true do |t|
     t.string   "name"
@@ -53,10 +53,10 @@ ActiveRecord::Schema.define(version: 20140327014849) do
   create_table "examinations", force: true do |t|
     t.integer  "user_id"
     t.integer  "exam_id"
-    t.integer  "subject_id"
-    t.integer  "result"
+    t.boolean  "passed"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "subject_id"
   end
 
   add_index "examinations", ["exam_id"], name: "index_examinations_on_exam_id"
@@ -81,6 +81,7 @@ ActiveRecord::Schema.define(version: 20140327014849) do
   create_table "exams_users", force: true do |t|
     t.integer  "user_id"
     t.integer  "exam_id"
+    t.boolean  "passed",     default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -105,10 +106,10 @@ ActiveRecord::Schema.define(version: 20140327014849) do
 
   create_table "subjects", force: true do |t|
     t.string   "name"
-    t.integer  "total_questions"
-    t.integer  "time_limit"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "total_questions"
+    t.integer  "time_limit"
   end
 
   create_table "user_answers", force: true do |t|

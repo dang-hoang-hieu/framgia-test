@@ -4,7 +4,7 @@ class CreateExaminations < ActiveRecord::Migration
       t.integer :user_id
       t.integer :exam_id
       t.integer :subject_id
-      t.integer :result
+      t.boolean :passed
 
       t.timestamps
     end

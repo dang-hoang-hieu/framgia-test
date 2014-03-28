@@ -1,0 +1,39 @@
+<tr>
+  <td><%= exams_user.user.name %></td>
+  <td><%= exams_user.exam.name %></td>
+  <td>
+    <ol>
+    <% if exams_user.examinations.count > 0 %>
+      <% exams_user.examinations.each do |examination| %>
+        <% if examination.passed %>
+          <li>
+            <span class="label label-success">passed</span>
+            <%= link_to " detail", admin_examination_path(examination)%>
+          </li>
+        <% elsif examination.being_taken?  %>
+          <li>
+            <span class="label label-warning">being taken</span>
+            <br/>
+            <%= form_for [:admin, examination] do |f| %>
+              <%= f.submit "calculate result", class: "btn" %>
+            <% end %>
+          </li>          
+        <% else %>
+          <li id="retake-holder-<%= examination.exam_id %>">
+            <span class="label label-important">failed</span> 
+            <%= link_to " detail", admin_examination_path(examination)%>
+            <span class="btn" id="retake-<%= examination.exam_id %>" data-exam-id="<%= examination.exam_id %>" 
+              data-user-id="<%= examination.user_id %>">retake</span>              
+          </li>
+        <% end %>
+      <% end %>
+    <% else %>
+          <li id="start-exam-holder-<%= exams_user.exam_id %>">
+            <span class="label label-info">not taken yet</span>
+            <label class="btn btn-primary" id="start-exam-<%= exams_user.exam_id %>" data-user-id="<%= exams_user.user_id%>" 
+                data-exam-id="<%= exams_user.exam_id %>">start</label>              
+          </li>
+    <% end %>
+    </ol>
+  </td>
+</tr>

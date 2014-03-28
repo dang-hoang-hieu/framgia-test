@@ -6,7 +6,7 @@
           exam_id = @examination.exam_id
           @subject = answers_sheet.subject
           time_limit = @subject.time_limit_by exam_id
-          total_questions = @subject.total_questions_by exam_id
+          total_questions = @subject.total_questions exam_id
         %>
 
         <%= @subject.name %><br/>

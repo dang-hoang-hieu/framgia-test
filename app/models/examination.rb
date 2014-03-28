@@ -3,9 +3,37 @@ class Examination < ActiveRecord::Base
   belongs_to :exam
   has_many :answers_sheets, dependent: :destroy
   belongs_to :subject
+
+  LOWEST_RESULT_TO_PASS = 0.5
+  PENDING = 0
+
   def remove_trash
     unless self.exam_id? || self.answers_sheets.present?
       self.destroy
     end
+  end
+
+  def being_taken?
+    passed.nil?
+  end
+
+  def calculate_result status = PENDING
+    self.passed = true
+
+    answers_sheets_taken = AnswersSheet.where(examination_id: id, status: status)
+    total_answers_sheets = self.exam.exams_subjects
+    if answers_sheets_taken.count == total_answers_sheets.count
+      answers_sheets_taken.each do |answers_sheet|
+        total_mark = answers_sheet.get_total_questions
+        if (answers_sheet.result.to_f / total_mark) < LOWEST_RESULT_TO_PASS
+          self.passed = false
+          break
+        end
+      end
+    else
+      self.passed = false
+    end
+
+    self.save
   end
 end

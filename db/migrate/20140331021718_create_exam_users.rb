@@ -1,9 +1,10 @@
-class CreateExamsUsers < ActiveRecord::Migration
+class CreateExamUsers < ActiveRecord::Migration
   def change
     create_table :exams_users do |t|
       t.integer :user_id
       t.integer :exam_id
-
+      t.boolean :passed, default: false
+      
       t.timestamps
     end
 
