@@ -16,7 +16,8 @@ class AnswersSheet < ActiveRecord::Base
   end
 
   def generate_questions
-    number_questions = get_total_questions
+    number_questions = self.subject
+      .retrieve_total_questions self.examination.exam_id
 
     question_ids = Question.find_by_subject(subject_id).ids
     questions = Question.find(question_ids.shuffle.take(number_questions))
@@ -26,10 +27,6 @@ class AnswersSheet < ActiveRecord::Base
         detail.user_answers.build(answer_id: answer.id)
       end
     end
-  end
- 
-  def get_total_questions
-    self.subject.total_questions self.examination.exam_id
   end
 
   private

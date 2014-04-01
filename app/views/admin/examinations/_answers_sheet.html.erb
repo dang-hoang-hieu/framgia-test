@@ -1,6 +1,6 @@
 <tr>
 	<td><%= answers_sheet.subject.name %></td>
 	<td><%= answers_sheet.status %></td>
-	<td><%= answers_sheet.result %>/<%= answers_sheet.get_total_questions %></td>
+	<td><%= answers_sheet.result %>/<%= answers_sheet.answers_sheet_details.count %></td>
 	<td><%= link_to "reassert", [:edit, :admin, @examination, answers_sheet] %></td>
 </tr>
