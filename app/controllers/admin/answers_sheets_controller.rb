@@ -38,7 +38,7 @@ class Admin::AnswersSheetsController < Admin::AdminsController
   private
   def fill_user_answers_to sheet
     sheet.answers_sheet_details.each do |detail|
-      answers      = detail.question.answers.ids
+      answers = detail.question.answers.ids
       user_answers = detail.user_answers.pluck :answer_id
       unchecked_answers = answers - user_answers
       unchecked_answers.each do |ans_id|
@@ -46,7 +46,7 @@ class Admin::AnswersSheetsController < Admin::AdminsController
       end
 
       correct_answers = detail.question.answers
-        .where(:correct_answer).ids
+        .where(correct_answer: true).ids
 
       if correct_answers.equal? user_answers
         detail.correct = true

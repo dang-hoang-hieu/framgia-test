@@ -21,10 +21,10 @@ class Examination < ActiveRecord::Base
     self.passed = true
 
     answers_sheets_taken = AnswersSheet.where(examination_id: id, status: status)
-    total_answers_sheets = self.exam.exams_subjects
-    if answers_sheets_taken.count == total_answers_sheets.count
+    total_answers_sheets = self.exam.try(:exams_subjects) 
+    if answers_sheets_taken.count == total_answers_sheets.try(:count)
       answers_sheets_taken.each do |answers_sheet|
-        total_mark = answers_sheet.get_total_questions
+        total_mark = answers_sheet.answers_sheet_details.count
         if (answers_sheet.result.to_f / total_mark) < LOWEST_RESULT_TO_PASS
           self.passed = false
           break

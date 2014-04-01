@@ -9,7 +9,7 @@ class Subject < ActiveRecord::Base
   
   before_save :convert_time_to_second
   
-  def total_questions exam_id
+  def retrieve_total_questions exam_id
     if exam_id.present?
       self.exams_subjects.find_by(exam_id: exam_id).total_questions
     else
