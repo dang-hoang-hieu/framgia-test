@@ -1,6 +1,7 @@
 class AnswersSheetsController < ApplicationController
   before_action :signed_in_user
   PENDING = 0
+  SUCCESS = 1
 
   def create
     examination = Examination.find params[:examination_id]
@@ -20,6 +21,7 @@ class AnswersSheetsController < ApplicationController
 
   def update
     @answers_sheet = AnswersSheet.find params[:id]
+    @answers_sheet.status = SUCCESS
     if @answers_sheet.update_attributes answers_sheet_params
       flash[:success] = "result submitted, wait for assertion"
       redirect_to examinations_url      

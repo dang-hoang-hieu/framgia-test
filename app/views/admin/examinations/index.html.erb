@@ -1,0 +1,17 @@
+<fieldset>
+	<legend>examinations:</legend>
+    <%= will_paginate @exams_users %>
+    <table class="table table-bordered" id="examination-list">
+      <thead>
+        <tr>
+          <th>user</th>
+          <th>exam</th>
+          <th>examinations</th>          
+        </tr>
+      </thead>
+      <tbody>
+        <%= render partial: "exams_user", collection: @exams_users %>        
+      </tbody>
+    </table>
+    <%= will_paginate @exams_users %>
+</fieldset>

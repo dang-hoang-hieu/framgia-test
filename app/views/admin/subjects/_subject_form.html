@@ -4,6 +4,12 @@
       <%= render "shared/error_messages", object: f.object %>
       <%= f.label :name %>
       <%= f.text_field :name %>
+      
+      <%= f.label :total_questions %>
+      <%= f.text_field :total_questions %>
+
+      <%= f.label :time_limit %>
+      <%= text_field_tag "subject[time_limit]", (@subject.try(:time_limit) || 0)/ 60 %>
 
       <%= f.submit "Submit", class: "btn btn-primary" %>
     <% end %>

@@ -58,7 +58,7 @@ class Admin::QuestionsController < Admin::AdminsController
 
   private
   def question_params
-    params.require(:question).permit(:question, :level_id, :question_id, 
-      :subject_id, answers_attributes: [:correct_answer, :answer, :id])
+    params.require(:question).permit(:name, :level_id, :question_id, 
+      :subject_id, answers_attributes: [:correct_answer, :name, :id])
   end
 end

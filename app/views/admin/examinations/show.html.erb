@@ -1,0 +1,18 @@
+<h1>examination detail</h1>
+
+<fieldset>
+	<legend><%= @examination.user.name %>'s <%= @examination.exam.name %></legend>
+    <table class="table table-bordered answers-sheet-list">
+      <thead>
+        <tr>
+          <th>subject</th>
+          <th>status</th>
+          <th>result</th>
+          <th>actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= render partial: "answers_sheet", collection: @examination.answers_sheets %>        
+      </tbody>
+    </table>
+</fieldset>
