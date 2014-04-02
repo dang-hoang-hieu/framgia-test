@@ -6,7 +6,7 @@ class Examination < ActiveRecord::Base
 
   LOWEST_RESULT_TO_PASS = 0.5
   PENDING = 0
-
+  
   def remove_trash
     unless self.exam_id? || self.answers_sheets.present?
       self.destroy

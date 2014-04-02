@@ -1,0 +1,26 @@
+<fieldset>
+	<legend>monitor:</legend>
+    <table class="table table-bordered" id="examination-list">
+      <thead>
+        <tr>
+          <th>model</th>
+          <th>file</th>         
+          <th>import</th>
+          <th>export</th> 
+        </tr>
+      </thead>
+      <tbody>
+        <% @tables.each do |table| %>
+          <tr>
+            <td><%= table %></td>
+            <%= form_tag admin_monitors_import_path, multipart: true do %>
+             <td><%= file_field_tag :file %></td>
+             <%= hidden_field_tag :model, table %>
+             <td><%= submit_tag "Import", class: "btn btn-primary" %></td>
+           <% end %>
+            <td><%= link_to "CSV", "/admin/monitors/export.csv?model=#{table}", class: "btn btn-primary" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+</fieldset>
