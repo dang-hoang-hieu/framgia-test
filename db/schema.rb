@@ -32,6 +32,8 @@ ActiveRecord::Schema.define(version: 20140331021718) do
     t.datetime "updated_at"
   end
 
+  add_index "answers", ["question_id"], name: "index_answers_on_question_id"
+
   create_table "answers_sheet_details", force: true do |t|
     t.integer  "answers_sheet_id", default: 0
     t.integer  "question_id",      default: 0
@@ -50,16 +52,21 @@ ActiveRecord::Schema.define(version: 20140331021718) do
     t.datetime "updated_at"
   end
 
+  add_index "answers_sheets", ["examination_id", "subject_id"], name: "index_answers_sheets_on_examination_id_and_subject_id"
+  add_index "answers_sheets", ["examination_id"], name: "index_answers_sheets_on_examination_id"
+  add_index "answers_sheets", ["subject_id"], name: "index_answers_sheets_on_subject_id"
+
   create_table "examinations", force: true do |t|
     t.integer  "user_id"
     t.integer  "exam_id"
+    t.integer  "subject_id"
     t.boolean  "passed"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "subject_id"
   end
 
   add_index "examinations", ["exam_id"], name: "index_examinations_on_exam_id"
+  add_index "examinations", ["subject_id"], name: "index_examinations_on_subject_id"
   add_index "examinations", ["user_id", "exam_id"], name: "index_examinations_on_user_id_and_exam_id"
   add_index "examinations", ["user_id"], name: "index_examinations_on_user_id"
 
@@ -72,11 +79,15 @@ ActiveRecord::Schema.define(version: 20140331021718) do
   create_table "exams_subjects", force: true do |t|
     t.integer  "subject_id"
     t.integer  "exam_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.integer  "total_questions"
     t.integer  "time_limit"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
+
+  add_index "exams_subjects", ["exam_id", "subject_id"], name: "index_exams_subjects_on_exam_id_and_subject_id"
+  add_index "exams_subjects", ["exam_id"], name: "index_exams_subjects_on_exam_id"
+  add_index "exams_subjects", ["subject_id"], name: "index_exams_subjects_on_subject_id"
 
   create_table "exams_users", force: true do |t|
     t.integer  "user_id"
@@ -104,20 +115,24 @@ ActiveRecord::Schema.define(version: 20140331021718) do
     t.datetime "updated_at"
   end
 
+  add_index "questions", ["level_id"], name: "index_questions_on_level_id"
+  add_index "questions", ["subject_id", "level_id"], name: "index_questions_on_subject_id_and_level_id"
+  add_index "questions", ["subject_id"], name: "index_questions_on_subject_id"
+
   create_table "subjects", force: true do |t|
     t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.integer  "total_questions"
     t.integer  "time_limit"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "user_answers", force: true do |t|
     t.integer  "answers_sheet_detail_id"
     t.integer  "answer_id"
+    t.integer  "checked"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "checked"
   end
 
   create_table "users", force: true do |t|
